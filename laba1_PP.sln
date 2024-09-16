@@ -1,31 +1,60 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34322.80
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "laba1_PP", "laba1_PP\laba1_PP.vcxproj", "{BC217CCC-5E45-499E-BC9D-B75C2601DF09}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BC217CCC-5E45-499E-BC9D-B75C2601DF09}.Debug|x64.ActiveCfg = Debug|x64
-		{BC217CCC-5E45-499E-BC9D-B75C2601DF09}.Debug|x64.Build.0 = Debug|x64
-		{BC217CCC-5E45-499E-BC9D-B75C2601DF09}.Debug|x86.ActiveCfg = Debug|Win32
-		{BC217CCC-5E45-499E-BC9D-B75C2601DF09}.Debug|x86.Build.0 = Debug|Win32
-		{BC217CCC-5E45-499E-BC9D-B75C2601DF09}.Release|x64.ActiveCfg = Release|x64
-		{BC217CCC-5E45-499E-BC9D-B75C2601DF09}.Release|x64.Build.0 = Release|x64
-		{BC217CCC-5E45-499E-BC9D-B75C2601DF09}.Release|x86.ActiveCfg = Release|Win32
-		{BC217CCC-5E45-499E-BC9D-B75C2601DF09}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {531025B9-95E4-4656-BCD0-016A19AF49DC}
-	EndGlobalSection
-EndGlobal
+#include <iostream>
+#include <time.h>
+#include <string>
+#include <windows.h>
+
+using namespace std;
+
+class station {	
+private:
+	string StationName;
+	double Price;
+	int SeatsAmount;
+	int TicketsSold;
+public:
+	station(string StationName, double Price, int SeatsAmount, int TicketsSold) :
+		StationName(StationName), Price(Price), SeatsAmount(SeatsAmount), TicketsSold(TicketsSold) {}
+
+	string getDestinationName() {
+		return StationName;
+	}
+
+	double getPrice() {
+		return Price;
+	}
+
+	int getSeatsAmount() {
+		return SeatsAmount;
+	}
+
+	int getSoldAmount() {
+		return TicketsSold;
+	}
+
+	double unsoldTickCounter() {
+		return ((SeatsAmount - TicketsSold) * Price);
+	}
+};
+
+
+int main() {
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	srand(time(0));
+
+	int whole = rand() % 250;
+	int sold = rand() % 250;
+	while (sold > whole) {
+		sold = rand() % 250;
+	}
+
+	station Morskaya("Морская", 1190, whole, sold);
+
+	cout << "Наименование станции: " << Morskaya.getDestinationName();
+	cout << "\nСтоимость билета: " << Morskaya.getPrice();
+	cout << "\nЧисло мест: " << Morskaya.getSeatsAmount();
+	cout << "\nЧисло проданных билетов: " << Morskaya.getSoldAmount();
+	cout << "\n\nОбщая стоимость непроданных билетов: " << Morskaya.unsoldTickCounter() << "\n";
+
+	return 0;
+}
