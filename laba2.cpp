@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class station { // единственная станция с шаблоном Singleton
+class station { // ГҐГ¤ГЁГ­Г±ГІГўГҐГ­Г­Г Гї Г±ГІГ Г­Г¶ГЁГї Г± ГёГ ГЎГ«Г®Г­Г®Г¬ Singleton
 private:
 	string StationName;
 	static station* instance;
@@ -20,7 +20,7 @@ public:
 
 	static station* getInstance() {
 		if (!instance) {
-			instance = new station("                >>>Станция города ИСИТ<<<");
+			instance = new station("                >>>Г‘ГІГ Г­Г¶ГЁГї ГЈГ®Г°Г®Г¤Г  Г€Г‘Г€Г’<<<");
 		}
 		return instance;
 	}
@@ -51,27 +51,27 @@ public:
 class ticketOffice {
 public:
 	void enterTariffsInfo(string destination, int price, map<string, double> &list) {
-		list[destination] = price; // переназначение тарифа
+		list[destination] = price; // ГЇГҐГ°ГҐГ­Г Г§Г­Г Г·ГҐГ­ГЁГҐ ГІГ Г°ГЁГґГ 
 		//for (auto s : list) {
-		//	cout << s.first << ' ' << s.second << endl; //вывод тарифов
+		//	cout << s.first << ' ' << s.second << endl; //ГўГ»ГўГ®Г¤ ГІГ Г°ГЁГґГ®Гў
 		//}
 	}
 
 	void buy_and_register(string name, string passportNumber, string dest, multimap<string, pair<string, string>> &registering) {
-		registering.insert(pair<string, pair<string, string>>(dest, make_pair(passportNumber, name))); // сохранение данных о пассажире
-		cout << "Покупка билета зарегистрирована!\n";
+		registering.insert(pair<string, pair<string, string>>(dest, make_pair(passportNumber, name))); // Г±Г®ГµГ°Г Г­ГҐГ­ГЁГҐ Г¤Г Г­Г­Г»Гµ Г® ГЇГ Г±Г±Г Г¦ГЁГ°ГҐ
+		cout << "ГЏГ®ГЄГіГЇГЄГ  ГЎГЁГ«ГҐГІГ  Г§Г Г°ГҐГЈГЁГ±ГІГ°ГЁГ°Г®ГўГ Г­Г !\n";
 	}
 
 	void countTicketsCost(string name, string passNumb, multimap<string, pair<string, string>> &m, map<string, double> &pr) {
 		bool found = false;
-		for (auto& it : m) { // поиск пассажира по номеру паспорта
+		for (auto& it : m) { // ГЇГ®ГЁГ±ГЄ ГЇГ Г±Г±Г Г¦ГЁГ°Г  ГЇГ® Г­Г®Г¬ГҐГ°Гі ГЇГ Г±ГЇГ®Г°ГІГ 
 			if (passNumb == it.second.first) {
 				found = true;
 				break;
 			}
 		}
 		if (!found) {
-			cout << "Пассажир с указанным номером паспорта не найден!\n";
+			cout << "ГЏГ Г±Г±Г Г¦ГЁГ° Г± ГіГЄГ Г§Г Г­Г­Г»Г¬ Г­Г®Г¬ГҐГ°Г®Г¬ ГЇГ Г±ГЇГ®Г°ГІГ  Г­ГҐ Г­Г Г©Г¤ГҐГ­!\n";
 			return;
 		}
 
@@ -79,14 +79,14 @@ public:
 		for (auto& f : m) { //map m: destination, <number, name>
 			if (passNumb == f.second.first && name == f.second.second) {
 				for (auto& s : pr) {  //map pr: destination price
-					if (f.first == s.first) { // проверка сопоставления цены с пунктом назначения
+					if (f.first == s.first) { // ГЇГ°Г®ГўГҐГ°ГЄГ  Г±Г®ГЇГ®Г±ГІГ ГўГ«ГҐГ­ГЁГї Г¶ГҐГ­Г» Г± ГЇГіГ­ГЄГІГ®Г¬ Г­Г Г§Г­Г Г·ГҐГ­ГЁГї
 						total += s.second;
 						break;
 					}
 				}
 			}
 		}
-		cout << "Стоимость купленных пассажиром билетов: " << total << endl;
+		cout << "Г‘ГІГ®ГЁГ¬Г®Г±ГІГј ГЄГіГЇГ«ГҐГ­Г­Г»Гµ ГЇГ Г±Г±Г Г¦ГЁГ°Г®Г¬ ГЎГЁГ«ГҐГІГ®Гў: " << total << endl;
 	}
 
 	void show_passengers_by_destination(string dest, multimap<string, pair<string, string>> &pbd) {
@@ -98,43 +98,43 @@ public:
 	}
 };
 
-enum Destination{Москва = 1, Казань, Петербург};
+enum Destination{ГЊГ®Г±ГЄГўГ  = 1, ГЉГ Г§Г Г­Гј, ГЏГҐГІГҐГ°ГЎГіГ°ГЈ};
 
 string cinDestination() {
 	double choice1;
-	cout << "Список доступных направлений: \n";
-	cout << "1. Москва " << endl;
-	cout << "2. Казань " << endl;
-	cout << "3. Петербург ";
+	cout << "Г‘ГЇГЁГ±Г®ГЄ Г¤Г®Г±ГІГіГЇГ­Г»Гµ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГ©: \n";
+	cout << "1. ГЊГ®Г±ГЄГўГ  " << endl;
+	cout << "2. ГЉГ Г§Г Г­Гј " << endl;
+	cout << "3. ГЏГҐГІГҐГ°ГЎГіГ°ГЈ ";
 begin:
-	cout << "\nВыберите номер пункта назначения: "; cin >> choice1;
+	cout << "\nГ‚Г»ГЎГҐГ°ГЁГІГҐ Г­Г®Г¬ГҐГ° ГЇГіГ­ГЄГІГ  Г­Г Г§Г­Г Г·ГҐГ­ГЁГї: "; cin >> choice1;
 	if (!cin.fail() && (int(choice1)) == choice1 && (to_string(choice1).find(",") == string::npos)) {
 		int choice = choice1;
 		switch (choice) {
-		case Москва:
+		case ГЊГ®Г±ГЄГўГ :
 		{
-			return "Москва";
+			return "ГЊГ®Г±ГЄГўГ ";
 			break;
 		}
-		case Казань:
+		case ГЉГ Г§Г Г­Гј:
 		{
-			return "Казань";
+			return "ГЉГ Г§Г Г­Гј";
 			break;
 		}
-		case Петербург:
+		case ГЏГҐГІГҐГ°ГЎГіГ°ГЈ:
 		{
-			return "Петербург";
+			return "ГЏГҐГІГҐГ°ГЎГіГ°ГЈ";
 			break;
 		}
 		default:
-			cout << "~~~Ошибка! Выберите допустимое направление~~~";
+			cout << "~~~ГЋГёГЁГЎГЄГ ! Г‚Г»ГЎГҐГ°ГЁГІГҐ Г¤Г®ГЇГіГ±ГІГЁГ¬Г®ГҐ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ~~~";
 			cin.clear();
 			cin.ignore(32767, '\n');
 			goto begin;
 		}
 	}
 	else {
-		cout << "~~~Ошибка! Выберите допустимое направление~~~";
+		cout << "~~~ГЋГёГЁГЎГЄГ ! Г‚Г»ГЎГҐГ°ГЁГІГҐ Г¤Г®ГЇГіГ±ГІГЁГ¬Г®ГҐ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ~~~";
 		cin.clear();
 		cin.ignore(32767, '\n');
 		goto begin;
@@ -143,8 +143,8 @@ begin:
 
 bool checkName(string s) {
 	int counter = 0;
-	for (int i = 0; i < s.length(); i++) { // проход по символам
-		if ((s[i] >= 'А' && s[i] <= 'Я' || s[i] >= 'а' && s[i] <= 'я') ||
+	for (int i = 0; i < s.length(); i++) { // ГЇГ°Г®ГµГ®Г¤ ГЇГ® Г±ГЁГ¬ГўГ®Г«Г Г¬
+		if ((s[i] >= 'ГЂ' && s[i] <= 'Гџ' || s[i] >= 'Г ' && s[i] <= 'Гї') ||
 			(s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z')) {
 			counter += 1;
 		}
@@ -169,28 +169,28 @@ int main(){
 	double choice;
 	cout << Station->getStationName() << endl;
 	cout << " --------------------------------------------------------\n";
-	cout << "|   Список доступных действий:                           |" << endl;
-	cout << "|1. Ввести данные о тарифах                              |" << endl;
-	cout << "|2. Купить билет                                         |" << endl;
-	cout << "|3. Рассчитать стоимость купленных пассажиром билетов    |" << endl;
-	cout << "|4. Вывести список пассажиров, купивших билет до станции |" << endl;
-	cout << "|5. Выйти                                                |" << endl;
+	cout << "|   Г‘ГЇГЁГ±Г®ГЄ Г¤Г®Г±ГІГіГЇГ­Г»Гµ Г¤ГҐГ©Г±ГІГўГЁГ©:                           |" << endl;
+	cout << "|1. Г‚ГўГҐГ±ГІГЁ Г¤Г Г­Г­Г»ГҐ Г® ГІГ Г°ГЁГґГ Гµ                              |" << endl;
+	cout << "|2. ГЉГіГЇГЁГІГј ГЎГЁГ«ГҐГІ                                         |" << endl;
+	cout << "|3. ГђГ Г±Г±Г·ГЁГІГ ГІГј Г±ГІГ®ГЁГ¬Г®Г±ГІГј ГЄГіГЇГ«ГҐГ­Г­Г»Гµ ГЇГ Г±Г±Г Г¦ГЁГ°Г®Г¬ ГЎГЁГ«ГҐГІГ®Гў    |" << endl;
+	cout << "|4. Г‚Г»ГўГҐГ±ГІГЁ Г±ГЇГЁГ±Г®ГЄ ГЇГ Г±Г±Г Г¦ГЁГ°Г®Гў, ГЄГіГЇГЁГўГёГЁГµ ГЎГЁГ«ГҐГІ Г¤Г® Г±ГІГ Г­Г¶ГЁГЁ |" << endl;
+	cout << "|5. Г‚Г»Г©ГІГЁ                                                |" << endl;
 	cout << " --------------------------------------------------------\n";
 doing_func:
-	cout << "Выберите действие: "; cin >> choice;
+	cout << "Г‚Г»ГЎГҐГ°ГЁГІГҐ Г¤ГҐГ©Г±ГІГўГЁГҐ: "; cin >> choice;
 	if (!cin.fail() && (int(choice)) == choice && (to_string(choice).find(",") == string::npos)) {
 		switch (int(choice)) {
-		case 1:              // ввод данных о тарифах
+		case 1:              // ГўГўГ®Г¤ Г¤Г Г­Г­Г»Гµ Г® ГІГ Г°ГЁГґГ Гµ
 		{
 			double price;
 			string destination;
 			destination = cinDestination();
 		goprice:
-			cout << "Введите цену (целое число от 1 до 10^10): "; cin >> price;
+			cout << "Г‚ГўГҐГ¤ГЁГІГҐ Г¶ГҐГ­Гі (Г¶ГҐГ«Г®ГҐ Г·ГЁГ±Г«Г® Г®ГІ 1 Г¤Г® 10^10): "; cin >> price;
 			if (cin.fail() || (int(price)) != price || price < 1 || price > 999999999) {
 				cin.clear();
 				cin.ignore(32767, '\n');
-				cout << "~~~Ошибка! Необходимо допустимое целое число~~~" << endl;
+				cout << "~~~ГЋГёГЁГЎГЄГ ! ГЌГҐГ®ГЎГµГ®Г¤ГЁГ¬Г® Г¤Г®ГЇГіГ±ГІГЁГ¬Г®ГҐ Г¶ГҐГ«Г®ГҐ Г·ГЁГ±Г«Г®~~~" << endl;
 				goto goprice;
 			}
 			else {
@@ -198,25 +198,25 @@ doing_func:
 			}
 			break;
 		}
-		case 2:              // регистрация покупки билета
+		case 2:              // Г°ГҐГЈГЁГ±ГІГ°Г Г¶ГЁГї ГЇГ®ГЄГіГЇГЄГЁ ГЎГЁГ«ГҐГІГ 
 		{
 			string name;
 			string passportNumber;
 		goreg:
-			cout << "Введите имя пассажира: "; cin >> name;
-			cout << "Введите серию и номер паспорта (6 цифр, без пробела): "; cin >> passportNumber;
+			cout << "Г‚ГўГҐГ¤ГЁГІГҐ ГЁГ¬Гї ГЇГ Г±Г±Г Г¦ГЁГ°Г : "; cin >> name;
+			cout << "Г‚ГўГҐГ¤ГЁГІГҐ Г±ГҐГ°ГЁГѕ ГЁ Г­Г®Г¬ГҐГ° ГЇГ Г±ГЇГ®Г°ГІГ  (6 Г¶ГЁГґГ°, ГЎГҐГ§ ГЇГ°Г®ГЎГҐГ«Г ): "; cin >> passportNumber;
 			if (cin.fail() || (stoi(passportNumber)) != stod(passportNumber) || checkName(name) == 0 || passportNumber.length() != 6) {
 				cin.clear();
 				cin.ignore(32767, '\n');
-				cout << "~~~Ошибка! Введите корректные данные~~~" << endl;
+				cout << "~~~ГЋГёГЁГЎГЄГ ! Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®Г°Г°ГҐГЄГІГ­Г»ГҐ Г¤Г Г­Г­Г»ГҐ~~~" << endl;
 				goto goreg;
 			}
 			passenger human(name, passportNumber);
 
-			string destination;                // ввод данных о тарифах
+			string destination;                // ГўГўГ®Г¤ Г¤Г Г­Г­Г»Гµ Г® ГІГ Г°ГЁГґГ Гµ
 			destination = cinDestination();
 			if (list.count(destination) == 0) {
-				cout << "~~~Ошибка! Сначала при помощи команды '1' введите соответствующий тариф~~~\n";
+				cout << "~~~ГЋГёГЁГЎГЄГ ! Г‘Г­Г Г·Г Г«Г  ГЇГ°ГЁ ГЇГ®Г¬Г®Г№ГЁ ГЄГ®Г¬Г Г­Г¤Г» '1' ГўГўГҐГ¤ГЁГІГҐ Г±Г®Г®ГІГўГҐГІГ±ГІГўГіГѕГ№ГЁГ© ГІГ Г°ГЁГґ~~~\n";
 				cin.clear();
 				cin.ignore(32767, '\n');
 				goto doing_func;
@@ -226,17 +226,17 @@ doing_func:
 			}
 			break;
 		}
-		case 3:               //расчет стоимости купленных пассажиром билетов
+		case 3:               //Г°Г Г±Г·ГҐГІ Г±ГІГ®ГЁГ¬Г®Г±ГІГЁ ГЄГіГЇГ«ГҐГ­Г­Г»Гµ ГЇГ Г±Г±Г Г¦ГЁГ°Г®Г¬ ГЎГЁГ«ГҐГІГ®Гў
 		{
 			string name;
 			string passportNumber;
 		counting:
-			cout << "Введите имя: "; cin >> name;
-			cout << "Введите серию и номер паспорта (без пробела): "; cin >> passportNumber;
+			cout << "Г‚ГўГҐГ¤ГЁГІГҐ ГЁГ¬Гї: "; cin >> name;
+			cout << "Г‚ГўГҐГ¤ГЁГІГҐ Г±ГҐГ°ГЁГѕ ГЁ Г­Г®Г¬ГҐГ° ГЇГ Г±ГЇГ®Г°ГІГ  (ГЎГҐГ§ ГЇГ°Г®ГЎГҐГ«Г ): "; cin >> passportNumber;
 			if (cin.fail() || (stoi(passportNumber)) != stod(passportNumber) || checkName(name) == 0 || passportNumber.length() != 6) {
 				cin.clear();
 				cin.ignore(32767, '\n');
-				cout << "~~~Ошибка! Введите корректные данные~~~" << endl;
+				cout << "~~~ГЋГёГЁГЎГЄГ ! Г‚ГўГҐГ¤ГЁГІГҐ ГЄГ®Г°Г°ГҐГЄГІГ­Г»ГҐ Г¤Г Г­Г­Г»ГҐ~~~" << endl;
 				goto counting;
 			}
 			passenger human(name, passportNumber);
@@ -258,7 +258,7 @@ doing_func:
 		}
 	}
 	else {
-		cout << "~~~Ошибка! Выберите допустимый номер функции~~~\n";
+		cout << "~~~ГЋГёГЁГЎГЄГ ! Г‚Г»ГЎГҐГ°ГЁГІГҐ Г¤Г®ГЇГіГ±ГІГЁГ¬Г»Г© Г­Г®Г¬ГҐГ° ГґГіГ­ГЄГ¶ГЁГЁ~~~\n";
 		cin.clear();
 		cin.ignore(32767, '\n');
 		goto doing_func;
