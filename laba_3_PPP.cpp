@@ -7,11 +7,11 @@
 
 using namespace std;
 
-//Интерфейсы в C++ — это способ описать поведение или возможности класса,
-//не связываясь с конкретной реализацией этого класса.
-//Они реализуются через абстрактные классы, содержащие чисто виртуальные функции
+//РРЅС‚РµСЂС„РµР№СЃС‹ РІ C++ вЂ” СЌС‚Рѕ СЃРїРѕСЃРѕР± РѕРїРёСЃР°С‚СЊ РїРѕРІРµРґРµРЅРёРµ РёР»Рё РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РєР»Р°СЃСЃР°,
+//РЅРµ СЃРІСЏР·С‹РІР°СЏСЃСЊ СЃ РєРѕРЅРєСЂРµС‚РЅРѕР№ СЂРµР°Р»РёР·Р°С†РёРµР№ СЌС‚РѕРіРѕ РєР»Р°СЃСЃР°.
+//РћРЅРё СЂРµР°Р»РёР·СѓСЋС‚СЃСЏ С‡РµСЂРµР· Р°Р±СЃС‚СЂР°РєС‚РЅС‹Рµ РєР»Р°СЃСЃС‹, СЃРѕРґРµСЂР¶Р°С‰РёРµ С‡РёСЃС‚Рѕ РІРёСЂС‚СѓР°Р»СЊРЅС‹Рµ С„СѓРЅРєС†РёРё
 
-class tariffs { // шаблон strategy, абстракт
+class tariffs { // С€Р°Р±Р»РѕРЅ strategy, Р°Р±СЃС‚СЂР°РєС‚
 public:
 	virtual ~tariffs() {}
 	virtual double getFinalPrice(double price, double discount) const = 0;
@@ -50,15 +50,15 @@ public:
 	void addNewTariff(string destination, double price, double discount, multimap<string, pair<double, double>>& d) {
 		if (d.empty()) {
 			d.insert(pair<string, pair<double, double>>(destination, make_pair(price, discount)));
-			cout << "Тариф успешно добавлен!\n";
+			cout << "РўР°СЂРёС„ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ!\n";
 		}else {
 			for (auto& s : d) {
 				if (s.first == destination && s.second.first == price && s.second.second == discount) {
-					throw "~~~Такой тариф уже существует~~~";
+					throw "~~~РўР°РєРѕР№ С‚Р°СЂРёС„ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚~~~";
 				}
 				else {
 					d.insert(pair<string, pair<double, double>>(destination, make_pair(price, discount)));
-					cout << "Тариф успешно добавлен!\n";
+					cout << "РўР°СЂРёС„ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ!\n";
 					break;
 				}
 			}
@@ -70,7 +70,7 @@ public:
 		double minPrice = 10000000000;
 		string current;
 		string key;
-		cout << "\nНаправление       Цена       Скидка" << endl;
+		cout << "\nРќР°РїСЂР°РІР»РµРЅРёРµ       Р¦РµРЅР°       РЎРєРёРґРєР°" << endl;
 		for (auto& s : d) {
 			cout << setw(11) << s.first << setw(11) << s.second.first << setw(11) << s.second.second << endl;
 			/*if (minPrice >= discountedTariff().getFinalPrice(s.second.first, s.second.second)) {
@@ -102,9 +102,9 @@ public:
 				siblings.push_back(current);*/
 			}
 		}
-		if (!siblings.empty()) { // пуст ли вектор
-			cout << "\nМинимальная цена: " << minPrice << endl;
-			cout << "Направления с минимальной ценой: " << endl;
+		if (!siblings.empty()) { // РїСѓСЃС‚ Р»Рё РІРµРєС‚РѕСЂ
+			cout << "\nРњРёРЅРёРјР°Р»СЊРЅР°СЏ С†РµРЅР°: " << minPrice << endl;
+			cout << "РќР°РїСЂР°РІР»РµРЅРёСЏ СЃ РјРёРЅРёРјР°Р»СЊРЅРѕР№ С†РµРЅРѕР№: " << endl;
 			int i = 1;
 			for (auto k : siblings) {
 				cout << i << ") " << k << endl;
@@ -120,8 +120,8 @@ public:
 
 bool checkString(string s) {
 	int counter = 0;
-	for (int i = 0; i < s.length(); i++) { // проход по символам
-		if ((s[i] >= 'А' && s[i] <= 'Я' || s[i] >= 'а' && s[i] <= 'я') ||
+	for (int i = 0; i < s.length(); i++) { // РїСЂРѕС…РѕРґ РїРѕ СЃРёРјРІРѕР»Р°Рј
+		if ((s[i] >= 'Рђ' && s[i] <= 'РЇ' || s[i] >= 'Р°' && s[i] <= 'СЏ') ||
 			(s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z')) {
 			counter += 1;
 		}
@@ -150,16 +150,16 @@ int main(){
 	cin.exceptions(istream::failbit);
 	double choice;
 	cout << " ------------------------------------------------\n";
-	cout << "|   Список доступных действий:                   |" << endl;
-	cout << "|1. Добавить новый тариф                         |" << endl;
-	cout << "|2. Найти направление с минимальной стоимостью   |" << endl;
-	cout << "|3. Выйти                                        |" << endl;
+	cout << "|   РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№:                   |" << endl;
+	cout << "|1. Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ С‚Р°СЂРёС„                         |" << endl;
+	cout << "|2. РќР°Р№С‚Рё РЅР°РїСЂР°РІР»РµРЅРёРµ СЃ РјРёРЅРёРјР°Р»СЊРЅРѕР№ СЃС‚РѕРёРјРѕСЃС‚СЊСЋ   |" << endl;
+	cout << "|3. Р’С‹Р№С‚Рё                                        |" << endl;
 	cout << " ------------------------------------------------\n";
 doing_func:
 	try {
-		cout << "Выберите действие: "; cin >> choice;
+		cout << "Р’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ: "; cin >> choice;
 		if (choice < 1 || choice > 3 || (int(choice) != choice)) {
-			throw "~~~Ошибка! Введите цифру от 1 до 3~~~";
+			throw "~~~РћС€РёР±РєР°! Р’РІРµРґРёС‚Рµ С†РёС„СЂСѓ РѕС‚ 1 РґРѕ 3~~~";
 		}
 		switch (int(choice)) {
 		case 1:
@@ -167,17 +167,17 @@ doing_func:
 			string destination;
 			double price;
 			double discount;
-			cout << "Введите название направления: "; cin >> destination; //+check 
+			cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ: "; cin >> destination; //+check 
 			if (checkString(destination) == 0) {
-				throw "~~~Ошибка! Название направления должно содержать только буквы~~~";
+				throw "~~~РћС€РёР±РєР°! РќР°Р·РІР°РЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРѕР»Р¶РЅРѕ СЃРѕРґРµСЂР¶Р°С‚СЊ С‚РѕР»СЊРєРѕ Р±СѓРєРІС‹~~~";
 			}
-			cout << "Введите цену: "; cin >> price;
+			cout << "Р’РІРµРґРёС‚Рµ С†РµРЅСѓ: "; cin >> price;
 			if (price < 0 || price > 10000000000) {
-				throw "~~~Ошибка! Цена варьируется от 0 до 10^10~~~";
+				throw "~~~РћС€РёР±РєР°! Р¦РµРЅР° РІР°СЂСЊРёСЂСѓРµС‚СЃСЏ РѕС‚ 0 РґРѕ 10^10~~~";
 			}
-			cout << "Введите скидку (в %): "; cin >> discount;
+			cout << "Р’РІРµРґРёС‚Рµ СЃРєРёРґРєСѓ (РІ %): "; cin >> discount;
 			if (discount < 0 || discount > 100) {
-				throw "~~~Ошибка! Процент скидки варьируется от 0 до 100~~~";
+				throw "~~~РћС€РёР±РєР°! РџСЂРѕС†РµРЅС‚ СЃРєРёРґРєРё РІР°СЂСЊРёСЂСѓРµС‚СЃСЏ РѕС‚ 0 РґРѕ 100~~~";
 			}
 			vokzal.addNewTariff(destination, price, discount, tariffPricesDiscounted);
 			break;
@@ -195,7 +195,7 @@ doing_func:
 		}
 	}
 	catch (const istream::failure& ex) {
-		cout << "~~~Ошибка! Некорректно введено значение~~~\n";// << ex.what();
+		cout << "~~~РћС€РёР±РєР°! РќРµРєРѕСЂСЂРµРєС‚РЅРѕ РІРІРµРґРµРЅРѕ Р·РЅР°С‡РµРЅРёРµ~~~\n";// << ex.what();
 		cin.clear();
 		cin.ignore(32767, '\n');
 		goto doing_func;
@@ -207,7 +207,7 @@ doing_func:
 		goto doing_func;
 	}
 	catch (...) {
-		cout << "~~~Ошибка! Некорректно введено значение~~~\n";
+		cout << "~~~РћС€РёР±РєР°! РќРµРєРѕСЂСЂРµРєС‚РЅРѕ РІРІРµРґРµРЅРѕ Р·РЅР°С‡РµРЅРёРµ~~~\n";
 		cin.clear();
 		cin.ignore(32767, '\n');
 		goto doing_func;
