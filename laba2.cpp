@@ -1,3 +1,18 @@
+/*1.	Для заданной предметной области спроектировать программную структуру, состоящую из 3–5 классов.
+2.	В соответствии с разработанной диаграммой классов выполнить программную реализацию. 
+3.	Предусмотреть использование типа данных – перечисление (enum). 
+4.	Ввод/вывод и проверки на ввод должен быть реализован вне проектируемого класса. Проверка полей на правильность ввода обязательна.
+5.	Реализовать деструктор.
+6.	Реализовать меню.
+Индивидуальное задание
+Вариант 2. Предметная область: Вокзал. 
+Касса вокзала имеет список тарифов на различные направления. При покупке билета регистрируются паспортные данные пассажира. Пассажир покупает билеты на различные направления. 
+Система должна:  
+-	позволять вводить данные о тарифах;  
+-	позволять вводить паспортные данные пассажира и регистрировать покупку билета;  
+-	рассчитывать стоимость купленных пассажиром билетов;  
+-	после ввода наименования направления выводить список всех пассажиров, купивших на него билет.
+*/
 #include <iostream>
 #include <windows.h>
 #include <string>
@@ -5,7 +20,7 @@
 
 using namespace std;
 
-class station { // åäèíñòâåííàÿ ñòàíöèÿ ñ øàáëîíîì Singleton
+class station { // единственная станция с шаблоном Singleton
 private:
 	string StationName;
 	static station* instance;
@@ -20,7 +35,7 @@ public:
 
 	static station* getInstance() {
 		if (!instance) {
-			instance = new station("                >>>Ñòàíöèÿ ãîðîäà ÈÑÈÒ<<<");
+			instance = new station("                >>>Станция города ИСИТ<<<");
 		}
 		return instance;
 	}
@@ -51,27 +66,27 @@ public:
 class ticketOffice {
 public:
 	void enterTariffsInfo(string destination, int price, map<string, double> &list) {
-		list[destination] = price; // ïåðåíàçíà÷åíèå òàðèôà
+		list[destination] = price; // переназначение тарифа
 		//for (auto s : list) {
-		//	cout << s.first << ' ' << s.second << endl; //âûâîä òàðèôîâ
+		//	cout << s.first << ' ' << s.second << endl; //вывод тарифов
 		//}
 	}
 
 	void buy_and_register(string name, string passportNumber, string dest, multimap<string, pair<string, string>> &registering) {
-		registering.insert(pair<string, pair<string, string>>(dest, make_pair(passportNumber, name))); // ñîõðàíåíèå äàííûõ î ïàññàæèðå
-		cout << "Ïîêóïêà áèëåòà çàðåãèñòðèðîâàíà!\n";
+		registering.insert(pair<string, pair<string, string>>(dest, make_pair(passportNumber, name))); // сохранение данных о пассажире
+		cout << "Покупка билета зарегистрирована!\n";
 	}
 
 	void countTicketsCost(string name, string passNumb, multimap<string, pair<string, string>> &m, map<string, double> &pr) {
 		bool found = false;
-		for (auto& it : m) { // ïîèñê ïàññàæèðà ïî íîìåðó ïàñïîðòà
+		for (auto& it : m) { // поиск пассажира по номеру паспорта
 			if (passNumb == it.second.first) {
 				found = true;
 				break;
 			}
 		}
 		if (!found) {
-			cout << "Ïàññàæèð ñ óêàçàííûì íîìåðîì ïàñïîðòà íå íàéäåí!\n";
+			cout << "Пассажир с указанным номером паспорта не найден!\n";
 			return;
 		}
 
@@ -79,14 +94,14 @@ public:
 		for (auto& f : m) { //map m: destination, <number, name>
 			if (passNumb == f.second.first && name == f.second.second) {
 				for (auto& s : pr) {  //map pr: destination price
-					if (f.first == s.first) { // ïðîâåðêà ñîïîñòàâëåíèÿ öåíû ñ ïóíêòîì íàçíà÷åíèÿ
+					if (f.first == s.first) { // проверка сопоставления цены с пунктом назначения
 						total += s.second;
 						break;
 					}
 				}
 			}
 		}
-		cout << "Ñòîèìîñòü êóïëåííûõ ïàññàæèðîì áèëåòîâ: " << total << endl;
+		cout << "Стоимость купленных пассажиром билетов: " << total << endl;
 	}
 
 	void show_passengers_by_destination(string dest, multimap<string, pair<string, string>> &pbd) {
@@ -98,43 +113,43 @@ public:
 	}
 };
 
-enum Destination{Ìîñêâà = 1, Êàçàíü, Ïåòåðáóðã};
+enum Destination{Москва = 1, Казань, Петербург};
 
 string cinDestination() {
 	double choice1;
-	cout << "Ñïèñîê äîñòóïíûõ íàïðàâëåíèé: \n";
-	cout << "1. Ìîñêâà " << endl;
-	cout << "2. Êàçàíü " << endl;
-	cout << "3. Ïåòåðáóðã ";
+	cout << "Список доступных направлений: \n";
+	cout << "1. Москва " << endl;
+	cout << "2. Казань " << endl;
+	cout << "3. Петербург ";
 begin:
-	cout << "\nÂûáåðèòå íîìåð ïóíêòà íàçíà÷åíèÿ: "; cin >> choice1;
+	cout << "\nВыберите номер пункта назначения: "; cin >> choice1;
 	if (!cin.fail() && (int(choice1)) == choice1 && (to_string(choice1).find(",") == string::npos)) {
 		int choice = choice1;
 		switch (choice) {
-		case Ìîñêâà:
+		case Москва:
 		{
-			return "Ìîñêâà";
+			return "Москва";
 			break;
 		}
-		case Êàçàíü:
+		case Казань:
 		{
-			return "Êàçàíü";
+			return "Казань";
 			break;
 		}
-		case Ïåòåðáóðã:
+		case Петербург:
 		{
-			return "Ïåòåðáóðã";
+			return "Петербург";
 			break;
 		}
 		default:
-			cout << "~~~Îøèáêà! Âûáåðèòå äîïóñòèìîå íàïðàâëåíèå~~~";
+			cout << "~~~Ошибка! Выберите допустимое направление~~~";
 			cin.clear();
 			cin.ignore(32767, '\n');
 			goto begin;
 		}
 	}
 	else {
-		cout << "~~~Îøèáêà! Âûáåðèòå äîïóñòèìîå íàïðàâëåíèå~~~";
+		cout << "~~~Ошибка! Выберите допустимое направление~~~";
 		cin.clear();
 		cin.ignore(32767, '\n');
 		goto begin;
@@ -143,8 +158,8 @@ begin:
 
 bool checkName(string s) {
 	int counter = 0;
-	for (int i = 0; i < s.length(); i++) { // ïðîõîä ïî ñèìâîëàì
-		if ((s[i] >= 'À' && s[i] <= 'ß' || s[i] >= 'à' && s[i] <= 'ÿ') ||
+	for (int i = 0; i < s.length(); i++) { // проход по символам
+		if ((s[i] >= 'А' && s[i] <= 'Я' || s[i] >= 'а' && s[i] <= 'я') ||
 			(s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z')) {
 			counter += 1;
 		}
@@ -169,28 +184,28 @@ int main(){
 	double choice;
 	cout << Station->getStationName() << endl;
 	cout << " --------------------------------------------------------\n";
-	cout << "|   Ñïèñîê äîñòóïíûõ äåéñòâèé:                           |" << endl;
-	cout << "|1. Ââåñòè äàííûå î òàðèôàõ                              |" << endl;
-	cout << "|2. Êóïèòü áèëåò                                         |" << endl;
-	cout << "|3. Ðàññ÷èòàòü ñòîèìîñòü êóïëåííûõ ïàññàæèðîì áèëåòîâ    |" << endl;
-	cout << "|4. Âûâåñòè ñïèñîê ïàññàæèðîâ, êóïèâøèõ áèëåò äî ñòàíöèè |" << endl;
-	cout << "|5. Âûéòè                                                |" << endl;
+	cout << "|   Список доступных действий:                           |" << endl;
+	cout << "|1. Ввести данные о тарифах                              |" << endl;
+	cout << "|2. Купить билет                                         |" << endl;
+	cout << "|3. Рассчитать стоимость купленных пассажиром билетов    |" << endl;
+	cout << "|4. Вывести список пассажиров, купивших билет до станции |" << endl;
+	cout << "|5. Выйти                                                |" << endl;
 	cout << " --------------------------------------------------------\n";
 doing_func:
-	cout << "Âûáåðèòå äåéñòâèå: "; cin >> choice;
+	cout << "Выберите действие: "; cin >> choice;
 	if (!cin.fail() && (int(choice)) == choice && (to_string(choice).find(",") == string::npos)) {
 		switch (int(choice)) {
-		case 1:              // ââîä äàííûõ î òàðèôàõ
+		case 1:              // ввод данных о тарифах
 		{
 			double price;
 			string destination;
 			destination = cinDestination();
 		goprice:
-			cout << "Ââåäèòå öåíó (öåëîå ÷èñëî îò 1 äî 10^10): "; cin >> price;
+			cout << "Введите цену (целое число от 1 до 10^10): "; cin >> price;
 			if (cin.fail() || (int(price)) != price || price < 1 || price > 999999999) {
 				cin.clear();
 				cin.ignore(32767, '\n');
-				cout << "~~~Îøèáêà! Íåîáõîäèìî äîïóñòèìîå öåëîå ÷èñëî~~~" << endl;
+				cout << "~~~Ошибка! Необходимо допустимое целое число~~~" << endl;
 				goto goprice;
 			}
 			else {
@@ -198,25 +213,25 @@ doing_func:
 			}
 			break;
 		}
-		case 2:              // ðåãèñòðàöèÿ ïîêóïêè áèëåòà
+		case 2:              // регистрация покупки билета
 		{
 			string name;
 			string passportNumber;
 		goreg:
-			cout << "Ââåäèòå èìÿ ïàññàæèðà: "; cin >> name;
-			cout << "Ââåäèòå ñåðèþ è íîìåð ïàñïîðòà (6 öèôð, áåç ïðîáåëà): "; cin >> passportNumber;
+			cout << "Введите имя пассажира: "; cin >> name;
+			cout << "Введите серию и номер паспорта (6 цифр, без пробела): "; cin >> passportNumber;
 			if (cin.fail() || (stoi(passportNumber)) != stod(passportNumber) || checkName(name) == 0 || passportNumber.length() != 6) {
 				cin.clear();
 				cin.ignore(32767, '\n');
-				cout << "~~~Îøèáêà! Ââåäèòå êîððåêòíûå äàííûå~~~" << endl;
+				cout << "~~~Ошибка! Введите корректные данные~~~" << endl;
 				goto goreg;
 			}
 			passenger human(name, passportNumber);
 
-			string destination;                // ââîä äàííûõ î òàðèôàõ
+			string destination;                // ввод данных о тарифах
 			destination = cinDestination();
 			if (list.count(destination) == 0) {
-				cout << "~~~Îøèáêà! Ñíà÷àëà ïðè ïîìîùè êîìàíäû '1' ââåäèòå ñîîòâåòñòâóþùèé òàðèô~~~\n";
+				cout << "~~~Ошибка! Сначала при помощи команды '1' введите соответствующий тариф~~~\n";
 				cin.clear();
 				cin.ignore(32767, '\n');
 				goto doing_func;
@@ -226,17 +241,17 @@ doing_func:
 			}
 			break;
 		}
-		case 3:               //ðàñ÷åò ñòîèìîñòè êóïëåííûõ ïàññàæèðîì áèëåòîâ
+		case 3:               //расчет стоимости купленных пассажиром билетов
 		{
 			string name;
 			string passportNumber;
 		counting:
-			cout << "Ââåäèòå èìÿ: "; cin >> name;
-			cout << "Ââåäèòå ñåðèþ è íîìåð ïàñïîðòà (áåç ïðîáåëà): "; cin >> passportNumber;
+			cout << "Введите имя: "; cin >> name;
+			cout << "Введите серию и номер паспорта (без пробела): "; cin >> passportNumber;
 			if (cin.fail() || (stoi(passportNumber)) != stod(passportNumber) || checkName(name) == 0 || passportNumber.length() != 6) {
 				cin.clear();
 				cin.ignore(32767, '\n');
-				cout << "~~~Îøèáêà! Ââåäèòå êîððåêòíûå äàííûå~~~" << endl;
+				cout << "~~~Ошибка! Введите корректные данные~~~" << endl;
 				goto counting;
 			}
 			passenger human(name, passportNumber);
@@ -258,7 +273,7 @@ doing_func:
 		}
 	}
 	else {
-		cout << "~~~Îøèáêà! Âûáåðèòå äîïóñòèìûé íîìåð ôóíêöèè~~~\n";
+		cout << "~~~Ошибка! Выберите допустимый номер функции~~~\n";
 		cin.clear();
 		cin.ignore(32767, '\n');
 		goto doing_func;
@@ -266,5 +281,6 @@ doing_func:
 	if (choice != 5 && choice >= 1 && choice < 5) {
 			goto doing_func;
 	}
+	delete Station;
 	return 0;
 }
